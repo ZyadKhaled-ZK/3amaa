@@ -6,8 +6,14 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-import os
+import os, urllib.request
 DATA_PATH = os.path.join(os.path.dirname(__file__), 'data.parquet')
+
+if not os.path.exists(DATA_PATH):
+    print('Downloading data...', flush=True)
+    url = 'https://github.com/ZyadKhaled-ZK/3amaa/raw/master/data.parquet'
+    urllib.request.urlretrieve(url, DATA_PATH)
+    print('Download complete', flush=True)
 
 print('Loading data...', flush=True)
 df = pd.read_parquet(DATA_PATH)
