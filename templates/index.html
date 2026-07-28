@@ -16,39 +16,20 @@
             color: #fff;
             padding: 20px;
         }
-        .container {
-            max-width: 700px;
-            width: 100%;
-            margin-top: 50px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #aaa;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
+        .container { max-width: 900px; width: 100%; margin-top: 30px; }
+        h1 { text-align: center; font-size: 28px; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 14px; }
         .search-box {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(12px);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #ccc;
-        }
+        .form-row { display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 150px; }
+        label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
         input, select {
             width: 100%;
             padding: 12px 16px;
@@ -60,49 +41,61 @@
             outline: none;
             transition: 0.2s;
         }
-        input:focus, select:focus {
-            border-color: #6c63ff;
-            box-shadow: 0 0 0 3px rgba(108,99,255,0.3);
-        }
+        input:focus, select:focus { border-color: #6c63ff; box-shadow: 0 0 0 3px rgba(108,99,255,0.3); }
         input::placeholder { color: #777; }
         select option { background: #302b63; color: #fff; }
         button {
-            width: 100%;
-            padding: 14px;
+            padding: 12px 30px;
             border: none;
             border-radius: 10px;
             background: linear-gradient(135deg, #6c63ff, #e040fb);
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
+            white-space: nowrap;
         }
         button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .result-card {
-            margin-top: 30px;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 25px;
+        .results-section { margin-top: 30px; display: none; }
+        .results-section.visible { display: block; }
+        .results-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px 12px 0 0;
             border: 1px solid rgba(255,255,255,0.1);
-            display: none;
+            border-bottom: none;
         }
-        .result-card.visible { display: block; }
-        .result-card h2 { text-align: center; margin-bottom: 20px; color: #e040fb; }
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+        .results-count { color: #aaa; font-size: 14px; }
+        .results-count span { color: #e040fb; font-weight: bold; }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.04);
+            border-radius: 0 0 12px 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
         }
-        .result-row:last-child { border-bottom: none; }
-        .result-label { color: #aaa; }
-        .result-value { font-weight: bold; color: #fff; }
-        .success .result-value { color: #4caf50; }
-        .fail .result-value { color: #f44336; }
+        .results-table th {
+            background: rgba(108,99,255,0.2);
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+        }
+        .results-table td {
+            padding: 12px 16px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+        .results-table tr:hover td { background: rgba(255,255,255,0.04); }
+        .status-pass { color: #4caf50; font-weight: bold; }
+        .status-fail { color: #f44336; font-weight: bold; }
 
         .error {
             margin-top: 20px;
@@ -116,16 +109,11 @@
         }
         .error.visible { display: block; }
 
-        .loading {
-            text-align: center;
-            margin-top: 20px;
-            display: none;
-        }
+        .loading { text-align: center; margin-top: 20px; display: none; }
         .loading.visible { display: block; }
         .spinner {
             display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 4px solid rgba(255,255,255,0.1);
             border-top-color: #6c63ff;
             border-radius: 50%;
@@ -134,11 +122,16 @@
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 30px;
+            padding: 20px;
             text-align: center;
             color: #555;
             font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            line-height: 2;
         }
+        .footer a { color: #6c63ff; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
         .hint { text-align: center; color: #666; font-size: 13px; margin-top: 10px; }
     </style>
 </head>
@@ -149,18 +142,20 @@
 
         <div class="search-box">
             <form id="searchForm">
-                <div class="form-group">
-                    <label for="searchBy">البحث بـ</label>
-                    <select id="searchBy">
-                        <option value="seating_no">رقم الجلوس</option>
-                        <option value="name">الاسم</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group" style="flex:0 0 160px">
+                        <label for="searchBy">البحث بـ</label>
+                        <select id="searchBy">
+                            <option value="seating_no">رقم الجلوس</option>
+                            <option value="name">الاسم</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label for="query">أدخل رقم الجلوس أو الاسم</label>
+                        <input type="text" id="query" placeholder="مثال: 2001970" autocomplete="off">
+                    </div>
+                    <button type="submit" id="searchBtn">بحث</button>
                 </div>
-                <div class="form-group">
-                    <label for="query">أدخل رقم الجلوس أو الاسم</label>
-                    <input type="text" id="query" placeholder="مثال: 2001970" autocomplete="off">
-                </div>
-                <button type="submit" id="searchBtn">بحث</button>
             </form>
             <p class="hint">يمكنك البحث برقم الجلوس (مطابقة تامة) أو بالاسم (جزء من الاسم)</p>
         </div>
@@ -172,12 +167,29 @@
 
         <div class="error" id="error"></div>
 
-        <div class="result-card" id="resultCard">
-            <h2>نتيجة البحث</h2>
-            <div id="resultContent"></div>
+        <div class="results-section" id="resultsSection">
+            <div class="results-header">
+                <div class="results-count">عدد النتائج: <span id="resultCount">0</span></div>
+            </div>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>م</th>
+                        <th>رقم الجلوس</th>
+                        <th>الاسم</th>
+                        <th>المجموع</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
         </div>
 
-        <div class="footer">جميع الحقوق محفوظة &copy; 2026</div>
+        <div class="footer">
+            <b>زياد خالد</b> &copy; 2026<br>
+            <a href="https://github.com/ZyadKhaled-ZK">GitHub: ZyadKhaled-ZK</a><br>
+            zezomx01@gmail.com
+        </div>
     </div>
 
     <script>
@@ -187,15 +199,16 @@
         const searchBtn = document.getElementById('searchBtn');
         const loading = document.getElementById('loading');
         const errorDiv = document.getElementById('error');
-        const resultCard = document.getElementById('resultCard');
-        const resultContent = document.getElementById('resultContent');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsBody = document.getElementById('resultsBody');
+        const resultCount = document.getElementById('resultCount');
 
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const query = queryInput.value.trim();
             if (!query) return;
 
-            resultCard.classList.remove('visible');
+            resultsSection.classList.remove('visible');
             errorDiv.classList.remove('visible');
             loading.classList.add('visible');
             searchBtn.disabled = true;
@@ -214,14 +227,18 @@
                     return;
                 }
 
-                const statusClass = data.student_case_desc && data.student_case_desc.includes('ناجح') ? 'success' : 'fail';
-                resultContent.innerHTML = `
-                    <div class="result-row"><span class="result-label">رقم الجلوس</span><span class="result-value">${data.seating_no}</span></div>
-                    <div class="result-row"><span class="result-label">الاسم</span><span class="result-value">${data.arabic_name}</span></div>
-                    <div class="result-row"><span class="result-label">المجموع</span><span class="result-value">${data.total_degree}</span></div>
-                    <div class="result-row ${statusClass}"><span class="result-label">الحالة</span><span class="result-value">${data.student_case_desc}</span></div>
-                `;
-                resultCard.classList.add('visible');
+                resultCount.textContent = data.count;
+                resultsBody.innerHTML = data.results.map((r, i) => {
+                    const statusClass = r.student_case_desc && r.student_case_desc.includes('ناجح') ? 'status-pass' : 'status-fail';
+                    return `<tr>
+                        <td>${i + 1}</td>
+                        <td>${r.seating_no}</td>
+                        <td>${r.arabic_name}</td>
+                        <td>${r.total_degree}</td>
+                        <td class="${statusClass}">${r.student_case_desc}</td>
+                    </tr>`;
+                }).join('');
+                resultsSection.classList.add('visible');
             } catch (err) {
                 errorDiv.textContent = 'حدث خطأ في الاتصال بالخادم';
                 errorDiv.classList.add('visible');
@@ -235,7 +252,7 @@
             const input = document.getElementById('query');
             input.placeholder = this.value === 'seating_no' ? 'مثال: 2001970' : 'مثال: أحمد محمود';
             input.value = '';
-            resultCard.classList.remove('visible');
+            resultsSection.classList.remove('visible');
             errorDiv.classList.remove('visible');
         });
     </script>

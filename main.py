@@ -43,13 +43,10 @@ def search():
     if result.empty:
         return jsonify({'error': 'لا توجد نتائج للبحث المطلوب'})
 
-    row = result.iloc[0]
-    return jsonify({
-        'seating_no': row['seating_no'],
-        'arabic_name': row['arabic_name'],
-        'total_degree': row['total_degree'],
-        'student_case_desc': row['student_case_desc']
-    })
+    results = result.head(100).to_dict('records')
+    for r in results:
+        r['seating_no'] = str(r['seating_no'])
+    return jsonify({'results': results, 'count': len(results)})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
