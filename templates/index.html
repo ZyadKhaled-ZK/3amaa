@@ -4,204 +4,852 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الاستعلام عن نتيجة الثانوية العامة 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
             min-height: 100vh;
+            background: #0a0a1a;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #fff;
+            overflow-x: hidden;
             padding: 20px;
         }
-        .container { max-width: 900px; width: 100%; margin-top: 30px; }
-        h1 { text-align: center; font-size: 28px; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 14px; }
-        .search-box {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .form-row { display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
-        .form-group { flex: 1; min-width: 150px; }
-        label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
-        input, select {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.06);
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            transition: 0.2s;
-        }
-        input:focus, select:focus { border-color: #6c63ff; box-shadow: 0 0 0 3px rgba(108,99,255,0.3); }
-        input::placeholder { color: #777; }
-        select option { background: #302b63; color: #fff; }
-        button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #6c63ff, #e040fb);
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
-        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .results-section { margin-top: 30px; display: none; }
-        .results-section.visible { display: block; }
-        .results-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 12px 12px 0 0;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-bottom: none;
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
-        .results-count { color: #aaa; font-size: 14px; }
-        .results-count span { color: #e040fb; font-weight: bold; }
 
-        .results-table {
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
             width: 100%;
-            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            perspective: 1200px;
+        }
+        .hero-inner {
+            transform: rotateX(2deg);
+            transition: transform 0.6s cubic-bezier(.23,1,.32,1);
+        }
+        .hero-inner:hover {
+            transform: rotateX(0deg) translateZ(10px);
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f7971e, #ffd200, #f7971e);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShine 3s ease-in-out infinite;
+            text-shadow: none;
+            filter: drop-shadow(0 0 30px rgba(247,151,30,0.3));
+            position: relative;
+        }
+        @keyframes goldShine {
+            0%,100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f7971e, #ffd200, transparent);
+            border-radius: 2px;
+        }
+        .hero .subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 15px;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+        .hero .subtitle span {
+            color: rgba(247,151,30,0.8);
+            font-weight: 600;
+        }
+
+        .search-section {
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+        .search-card {
             background: rgba(255,255,255,0.04);
-            border-radius: 0 0 12px 12px;
-            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 35px;
+            transform: rotateX(1deg) translateZ(0);
+            transition: all 0.5s cubic-bezier(.23,1,.32,1);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .search-card:hover {
+            transform: rotateX(0deg) translateZ(20px) scale(1.01);
+            box-shadow: 0 35px 80px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+            border-color: rgba(99,102,241,0.2);
+        }
+        .search-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .input-group {
+            flex: 1;
+            min-width: 160px;
+            position: relative;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group select, .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Cairo', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-group select { cursor: pointer; }
+        .input-group select option { background: #1a1a2e; color: #fff; }
+        .input-group input:focus, .input-group select:focus {
+            border-color: rgba(99,102,241,0.5);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15), inset 0 0 20px rgba(99,102,241,0.03);
+            transform: scale(1.01);
+        }
+        .input-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .btn-search {
+            padding: 14px 36px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            background-size: 200% 200%;
+            animation: gradientMove 4s ease-in-out infinite;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(.23,1,.32,1);
+            white-space: nowrap;
+            position: relative;
             overflow: hidden;
+            transform: translateZ(0);
         }
-        .results-table th {
-            background: rgba(108,99,255,0.2);
-            padding: 14px 16px;
+        .btn-search:hover {
+            transform: translateY(-3px) translateZ(15px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(99,102,241,0.35);
+        }
+        .btn-search:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .btn-search .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            to { transform: scale(4); opacity: 0; }
+        }
+        @keyframes gradientMove {
+            0%,100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hint-text {
             text-align: center;
-            font-size: 14px;
-            color: #ccc;
+            color: rgba(255,255,255,0.2);
+            font-size: 13px;
+            margin-top: 15px;
         }
-        .results-table td {
-            padding: 12px 16px;
+
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(.23,1,.32,1);
+        }
+        .stats-bar.visible { opacity: 1; transform: translateY(0); }
+        .stat-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 12px 24px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            min-width: 120px;
+        }
+        .stat-item .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(.23,1,.32,1);
+            transform-style: preserve-3d;
+            perspective: 800px;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px) rotateX(5deg) scale(0.95);
+        }
+        .result-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg) scale(1);
+        }
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+            border-radius: 18px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), transparent, rgba(168,85,247,0.15));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .result-card:hover::before { opacity: 1; }
+        .result-card:hover {
+            transform: translateY(-5px) translateZ(30px) rotateX(2deg) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 40px rgba(99,102,241,0.08);
+            border-color: rgba(99,102,241,0.15);
+        }
+
+        .result-card .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.06), transparent);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        .result-card:hover .card-glow {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99,102,241,0.1), transparent);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .card-index {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.15));
+            border: 1px solid rgba(99,102,241,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.6);
+            flex-shrink: 0;
+        }
+        .card-seating {
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 600;
+            direction: ltr;
+            text-align: left;
+            flex-shrink: 0;
+        }
+
+        .card-body {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .card-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        .card-name .pct {
+            color: rgba(247,151,30,0.8);
+            font-weight: 600;
+        }
+        .card-details {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .card-detail-tag {
+            font-size: 12px;
+            padding: 3px 12px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.5);
+            font-weight: 600;
+        }
+        .card-detail-tag strong {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .card-progress {
+            flex-shrink: 0;
+            width: 72px;
+            height: 72px;
+            position: relative;
+        }
+        .card-progress svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .card-progress circle {
+            fill: none;
+            stroke-width: 4;
+        }
+        .card-progress .bg {
+            stroke: rgba(255,255,255,0.05);
+        }
+        .card-progress .fg {
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.2s cubic-bezier(.23,1,.32,1);
+        }
+        .card-progress .pct-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: 800;
+            direction: ltr;
+        }
+
+        .card-status {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .card-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        .dot-pass { background: #22c55e; box-shadow: 0 0 12px rgba(34,197,94,0.4); }
+        .dot-fail { background: #ef4444; box-shadow: 0 0 12px rgba(239,68,68,0.4); }
+        @keyframes pulse-dot {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.85); }
+        }
+        .status-pass { color: #22c55e; }
+        .status-fail { color: #ef4444; }
+
+        .loading-3d {
+            display: none;
+            text-align: center;
+            margin: 60px 0;
+        }
+        .loading-3d.visible { display: block; }
+        .cube-wrapper {
+            perspective: 300px;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+        }
+        .cube {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: cubeSpin 1.5s ease-in-out infinite;
+        }
+        .cube-face {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(99,102,241,0.3);
+            border-radius: 6px;
+        }
+        .cube-face:nth-child(1) { background: rgba(99,102,241,0.1); transform: translateZ(25px); }
+        .cube-face:nth-child(2) { background: rgba(99,102,241,0.08); transform: rotateY(180deg) translateZ(25px); }
+        .cube-face:nth-child(3) { background: rgba(168,85,247,0.1); transform: rotateY(-90deg) translateZ(25px); }
+        .cube-face:nth-child(4) { background: rgba(168,85,247,0.08); transform: rotateY(90deg) translateZ(25px); }
+        .cube-face:nth-child(5) { background: rgba(236,72,153,0.1); transform: rotateX(90deg) translateZ(25px); }
+        .cube-face:nth-child(6) { background: rgba(236,72,153,0.08); transform: rotateX(-90deg) translateZ(25px); }
+        @keyframes cubeSpin {
+            0% { transform: rotateX(-20deg) rotateY(0deg); }
+            100% { transform: rotateX(-20deg) rotateY(360deg); }
+        }
+        .loading-3d p {
+            color: rgba(255,255,255,0.3);
             font-size: 14px;
         }
-        .results-table tr:hover td { background: rgba(255,255,255,0.04); }
-        .status-pass { color: #4caf50; font-weight: bold; }
-        .status-fail { color: #f44336; font-weight: bold; }
 
         .error {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background: rgba(244,67,54,0.15);
-            border: 1px solid rgba(244,67,54,0.3);
-            color: #f44336;
-            text-align: center;
             display: none;
+            margin-top: 20px;
+            padding: 18px 24px;
+            border-radius: 14px;
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.15);
+            color: #ef4444;
+            text-align: center;
+            font-weight: 600;
         }
         .error.visible { display: block; }
 
-        .loading { text-align: center; margin-top: 20px; display: none; }
-        .loading.visible { display: block; }
-        .spinner {
-            display: inline-block;
-            width: 40px; height: 40px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top-color: #6c63ff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255,255,255,0.2);
+            display: none;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .empty-state.visible { display: block; }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+        .empty-state p { font-size: 16px; }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            display: none;
+        }
+        .pagination.visible { display: flex; }
+        .page-btn {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .page-btn:hover {
+            background: rgba(99,102,241,0.15);
+            border-color: rgba(99,102,241,0.3);
+            color: #fff;
+        }
+        .page-btn.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-color: transparent;
+            color: #fff;
+        }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
         .footer {
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 60px;
+            padding: 25px 0;
             text-align: center;
-            color: #555;
+            color: rgba(255,255,255,0.15);
             font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.03);
             line-height: 2;
+            width: 100%;
         }
-        .footer a { color: #6c63ff; text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-        .hint { text-align: center; color: #666; font-size: 13px; margin-top: 10px; }
+        .footer a { color: rgba(99,102,241,0.6); text-decoration: none; transition: color 0.3s; }
+        .footer a:hover { color: rgba(99,102,241,0.9); }
+        .footer .dev-name { color: rgba(255,255,255,0.4); font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 28px; }
+            .search-card { padding: 20px; }
+            .search-row { flex-direction: column; }
+            .input-group { width: 100%; }
+            .btn-search { width: 100%; }
+            .results-grid { grid-template-columns: 1fr; }
+            .card-progress { width: 60px; height: 60px; }
+            .card-name { font-size: 15px; }
+        }
+
+        .results-section { display: none; }
+        .results-section.visible { display: block; }
+        .no-results { display: none; }
+        .no-results.visible { display: block; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>نتيجة الثانوية العامة 2026</h1>
-        <p class="subtitle">الاستعلام عن نتيجة الدور الأول - نظام حديث</p>
 
-        <div class="search-box">
-            <form id="searchForm">
-                <div class="form-row">
-                    <div class="form-group" style="flex:0 0 160px">
-                        <label for="searchBy">البحث بـ</label>
-                        <select id="searchBy">
-                            <option value="seating_no">رقم الجلوس</option>
-                            <option value="name">الاسم</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="flex:1">
-                        <label for="query">أدخل رقم الجلوس أو الاسم</label>
-                        <input type="text" id="query" placeholder="مثال: 2001970" autocomplete="off">
-                    </div>
-                    <button type="submit" id="searchBtn">بحث</button>
-                </div>
-            </form>
-            <p class="hint">يمكنك البحث برقم الجلوس (مطابقة تامة) أو بالاسم (جزء من الاسم)</p>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="main-wrapper">
+
+        <div class="hero">
+            <div class="hero-inner">
+                <h1>نتيجة الثانوية العامة 2026</h1>
+                <p class="subtitle">الاستعلام عن نتيجة <span>الدور الأول</span> — نظام حديث</p>
+            </div>
         </div>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p style="margin-top:10px;color:#aaa;">جارٍ البحث...</p>
+        <div class="search-section">
+            <div class="search-card">
+                <form id="searchForm">
+                    <div class="search-row">
+                        <div class="input-group" style="flex:0 0 170px">
+                            <label>البحث بـ</label>
+                            <select id="searchBy">
+                                <option value="seating_no">رقم الجلوس</option>
+                                <option value="name">الاسم</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>أدخل رقم الجلوس أو الاسم</label>
+                            <input type="text" id="query" placeholder="مثال: 2001970" autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn-search" id="searchBtn">🔍 بحث</button>
+                    </div>
+                </form>
+                <p class="hint-text">يمكنك البحث برقم الجلوس (مطابقة تامة) أو بالاسم (جزء من الاسم)</p>
+            </div>
+        </div>
+
+        <div class="loading-3d" id="loading3d">
+            <div class="cube-wrapper">
+                <div class="cube">
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                </div>
+            </div>
+            <p>جارٍ البحث...</p>
         </div>
 
         <div class="error" id="error"></div>
 
         <div class="results-section" id="resultsSection">
-            <div class="results-header">
-                <div class="results-count">عدد النتائج: <span id="resultCount">0</span></div>
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <div class="stat-value" id="statCount">0</div>
+                    <div class="stat-label">عدد النتائج</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statAvg">0%</div>
+                    <div class="stat-label">متوسط النسبة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statMax">0</div>
+                    <div class="stat-label">أعلى مجموع</div>
+                </div>
             </div>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>م</th>
-                        <th>رقم الجلوس</th>
-                        <th>الاسم</th>
-                        <th>المجموع</th>
-                        <th>الحالة</th>
-                    </tr>
-                </thead>
-                <tbody id="resultsBody"></tbody>
-            </table>
+
+            <div class="results-grid" id="resultsGrid"></div>
+
+            <div class="pagination" id="pagination">
+                <button class="page-btn" id="prevPage">◀ السابق</button>
+                <div id="pageNumbers"></div>
+                <button class="page-btn" id="nextPage">التالي ▶</button>
+            </div>
+        </div>
+
+        <div class="no-results" id="noResults">
+            <div class="empty-state visible">
+                <div class="icon">🔍</div>
+                <p>لا توجد نتائج للبحث المطلوب</p>
+            </div>
         </div>
 
         <div class="footer">
-            <b>زياد خالد</b> &copy; 2026<br>
-            <a href="https://github.com/ZyadKhaled-ZK">GitHub: ZyadKhaled-ZK</a><br>
+            <span class="dev-name">زياد خالد</span> &copy; 2026 &bull;
+            <a href="https://github.com/ZyadKhaled-ZK">GitHub: ZyadKhaled-ZK</a> &bull;
             zezomx01@gmail.com
         </div>
     </div>
 
     <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: 0, y: 0 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.z = Math.random() * 300;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.speedZ = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.z += this.speedZ;
+                if (this.z < 0 || this.z > 300) this.speedZ *= -1;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                const scale = 300 / (300 + this.z);
+                const x2d = (this.x - canvas.width / 2) * scale + canvas.width / 2;
+                const y2d = (this.y - canvas.height / 2) * scale + canvas.height / 2;
+                const size2d = this.size * scale;
+                ctx.beginPath();
+                ctx.arc(x2d, y2d, size2d, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity * scale})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 150; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        document.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        const PER_PAGE = 20;
+        let allResults = [];
+        let currentPage = 1;
+
         const searchForm = document.getElementById('searchForm');
         const queryInput = document.getElementById('query');
         const searchBy = document.getElementById('searchBy');
         const searchBtn = document.getElementById('searchBtn');
-        const loading = document.getElementById('loading');
+        const loading3d = document.getElementById('loading3d');
         const errorDiv = document.getElementById('error');
         const resultsSection = document.getElementById('resultsSection');
-        const resultsBody = document.getElementById('resultsBody');
-        const resultCount = document.getElementById('resultCount');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const noResults = document.getElementById('noResults');
+        const statsBar = document.getElementById('statsBar');
+        const statCount = document.getElementById('statCount');
+        const statAvg = document.getElementById('statAvg');
+        const statMax = document.getElementById('statMax');
+        const pagination = document.getElementById('pagination');
+        const prevPage = document.getElementById('prevPage');
+        const nextPage = document.getElementById('nextPage');
+        const pageNumbers = document.getElementById('pageNumbers');
+
+        function getProgressColor(pct) {
+            if (pct >= 85) return '#22c55e';
+            if (pct >= 70) return '#eab308';
+            if (pct >= 50) return '#f97316';
+            return '#ef4444';
+        }
+
+        function getStatusDot(caseDesc) {
+            if (!caseDesc) return { cls: 'dot-fail', text: '—', clsText: 'status-fail' };
+            if (caseDesc.includes('ناجح')) return { cls: 'dot-pass', text: '✅ ' + caseDesc, clsText: 'status-pass' };
+            return { cls: 'dot-fail', text: '❌ ' + caseDesc, clsText: 'status-fail' };
+        }
+
+        function renderCards() {
+            const start = (currentPage - 1) * PER_PAGE;
+            const end = start + PER_PAGE;
+            const pageResults = allResults.slice(start, end);
+
+            resultsGrid.innerHTML = '';
+            pageResults.forEach((r, i) => {
+                const pct = r.percentage || 0;
+                const color = getProgressColor(pct);
+                const circumference = 2 * Math.PI * 30;
+                const offset = circumference - (pct / 100) * circumference;
+                const status = getStatusDot(r.student_case_desc);
+
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.style.transitionDelay = `${i * 0.07}s`;
+                card.innerHTML = `
+                    <div class="card-glow"></div>
+                    <div class="card-top">
+                        <div class="card-index">${start + i + 1}</div>
+                        <div class="card-seating">${r.seating_no}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="card-name">${r.arabic_name} <span class="pct">(${pct}%)</span></div>
+                            <div class="card-details">
+                                <span class="card-detail-tag">المجموع: <strong>${r.total_degree}</strong> / 320</span>
+                            </div>
+                        </div>
+                        <div class="card-progress">
+                            <svg viewBox="0 0 72 72">
+                                <circle class="bg" cx="36" cy="36" r="30"/>
+                                <circle class="fg" cx="36" cy="36" r="30"
+                                    stroke="${color}"
+                                    stroke-dasharray="${circumference}"
+                                    stroke-dashoffset="${circumference}"
+                                    data-offset="${offset}"/>
+                            </svg>
+                            <div class="pct-text" style="color:${color}">${pct}%</div>
+                        </div>
+                    </div>
+                    <div class="card-status">
+                        <span class="dot ${status.cls}"></span>
+                        <span class="${status.clsText}">${status.text}</span>
+                    </div>
+                `;
+                resultsGrid.appendChild(card);
+            });
+
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.result-card').forEach((c, i) => {
+                    setTimeout(() => c.classList.add('visible'), i * 70);
+                });
+                setTimeout(() => {
+                    document.querySelectorAll('.card-progress .fg').forEach(el => {
+                        el.style.strokeDashoffset = el.dataset.offset;
+                    });
+                }, 100);
+            });
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(allResults.length / PER_PAGE);
+            if (totalPages <= 1) { pagination.classList.remove('visible'); return; }
+            pagination.classList.add('visible');
+
+            prevPage.disabled = currentPage === 1;
+            nextPage.disabled = currentPage === totalPages;
+
+            let html = '';
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<button class="page-btn" data-page="1">1</button>`;
+                if (startPage > 2) html += `<span style="color:rgba(255,255,255,0.2)">...</span>`;
+            }
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+            }
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span style="color:rgba(255,255,255,0.2)">...</span>`;
+                html += `<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+            }
+            pageNumbers.innerHTML = html;
+
+            document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentPage = parseInt(btn.dataset.page);
+                    renderCards();
+                    renderPagination();
+                    window.scrollTo({ top: document.querySelector('.results-section').offsetTop - 20, behavior: 'smooth' });
+                });
+            });
+        }
+
+        prevPage.addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; renderCards(); renderPagination(); }
+        });
+        nextPage.addEventListener('click', () => {
+            const totalPages = Math.ceil(allResults.length / PER_PAGE);
+            if (currentPage < totalPages) { currentPage++; renderCards(); renderPagination(); }
+        });
 
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -209,8 +857,9 @@
             if (!query) return;
 
             resultsSection.classList.remove('visible');
+            noResults.classList.remove('visible');
             errorDiv.classList.remove('visible');
-            loading.classList.add('visible');
+            loading3d.classList.add('visible');
             searchBtn.disabled = true;
 
             try {
@@ -227,33 +876,54 @@
                     return;
                 }
 
-                resultCount.textContent = data.count;
-                resultsBody.innerHTML = data.results.map((r, i) => {
-                    const statusClass = r.student_case_desc && r.student_case_desc.includes('ناجح') ? 'status-pass' : 'status-fail';
-                    return `<tr>
-                        <td>${i + 1}</td>
-                        <td>${r.seating_no}</td>
-                        <td>${r.arabic_name} (${r.percentage}%)</td>
-                        <td>${r.total_degree}</td>
-                        <td class="${statusClass}">${r.student_case_desc}</td>
-                    </tr>`;
-                }).join('');
+                allResults = data.results;
+                currentPage = 1;
+
+                if (allResults.length === 0) {
+                    noResults.classList.add('visible');
+                    return;
+                }
+
+                statsBar.classList.remove('visible');
+                void statsBar.offsetWidth;
+
+                statCount.textContent = allResults.length;
+                const avg = (allResults.reduce((s, r) => s + (r.percentage || 0), 0) / allResults.length);
+                statAvg.textContent = avg.toFixed(1) + '%';
+                const maxScore = Math.max(...allResults.map(r => r.total_degree));
+                statMax.textContent = maxScore;
+
                 resultsSection.classList.add('visible');
+                statsBar.classList.add('visible');
+                renderCards();
+                renderPagination();
+
             } catch (err) {
                 errorDiv.textContent = 'حدث خطأ في الاتصال بالخادم';
                 errorDiv.classList.add('visible');
             } finally {
-                loading.classList.remove('visible');
+                loading3d.classList.remove('visible');
                 searchBtn.disabled = false;
             }
         });
 
-        document.getElementById('searchBy').addEventListener('change', function() {
-            const input = document.getElementById('query');
-            input.placeholder = this.value === 'seating_no' ? 'مثال: 2001970' : 'مثال: أحمد محمود';
-            input.value = '';
+        searchBy.addEventListener('change', function() {
+            queryInput.placeholder = this.value === 'seating_no' ? 'مثال: 2001970' : 'مثال: أحمد محمود';
+            queryInput.value = '';
             resultsSection.classList.remove('visible');
+            noResults.classList.remove('visible');
             errorDiv.classList.remove('visible');
+        });
+
+        searchBtn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const rect = this.getBoundingClientRect();
+            ripple.style.width = ripple.style.height = '100px';
+            ripple.style.left = (e.clientX - rect.left - 50) + 'px';
+            ripple.style.top = (e.clientY - rect.top - 50) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
         });
     </script>
 </body>
