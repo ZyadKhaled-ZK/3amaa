@@ -38,7 +38,7 @@ def search():
     if search_by == 'seating_no':
         result = df[df['seating_no'] == query]
     else:
-        result = df[df['arabic_name'].str.contains(query, case=False, na=False)]
+        result = df[df['arabic_name'].str.contains(query, case=False, na=False, regex=False)]
 
     if result.empty:
         return jsonify({'error': 'لا توجد نتائج للبحث المطلوب'})
