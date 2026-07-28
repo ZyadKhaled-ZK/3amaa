@@ -43,7 +43,7 @@ def search():
     if result.empty:
         return jsonify({'error': 'لا توجد نتائج للبحث المطلوب'})
 
-    results = result.head(100).to_dict('records')
+    results = result.to_dict('records')
     for r in results:
         r['seating_no'] = str(r['seating_no'])
     return jsonify({'results': results, 'count': len(results)})
