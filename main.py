@@ -46,6 +46,7 @@ def search():
     results = result.to_dict('records')
     for r in results:
         r['seating_no'] = str(r['seating_no'])
+        r['percentage'] = round((r['total_degree'] / 320) * 100, 1) if r['total_degree'] else 0
     return jsonify({'results': results, 'count': len(results)})
 
 if __name__ == '__main__':
