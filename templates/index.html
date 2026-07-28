@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستعلام عن نتيجة الثانوية العامة 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .search-box {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108,99,255,0.3);
+        }
+        input::placeholder { color: #777; }
+        select option { background: #302b63; color: #fff; }
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6c63ff, #e040fb);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .result-card {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+        }
+        .result-card.visible { display: block; }
+        .result-card h2 { text-align: center; margin-bottom: 20px; color: #e040fb; }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { color: #aaa; }
+        .result-value { font-weight: bold; color: #fff; }
+        .success .result-value { color: #4caf50; }
+        .fail .result-value { color: #f44336; }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(244,67,54,0.15);
+            border: 1px solid rgba(244,67,54,0.3);
+            color: #f44336;
+            text-align: center;
+            display: none;
+        }
+        .error.visible { display: block; }
+
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .loading.visible { display: block; }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: #6c63ff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+        }
+        .hint { text-align: center; color: #666; font-size: 13px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>نتيجة الثانوية العامة 2026</h1>
+        <p class="subtitle">الاستعلام عن نتيجة الدور الأول - نظام حديث</p>
+
+        <div class="search-box">
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="searchBy">البحث بـ</label>
+                    <select id="searchBy">
+                        <option value="seating_no">رقم الجلوس</option>
+                        <option value="name">الاسم</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query">أدخل رقم الجلوس أو الاسم</label>
+                    <input type="text" id="query" placeholder="مثال: 2001970" autocomplete="off">
+                </div>
+                <button type="submit" id="searchBtn">بحث</button>
+            </form>
+            <p class="hint">يمكنك البحث برقم الجلوس (مطابقة تامة) أو بالاسم (جزء من الاسم)</p>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top:10px;color:#aaa;">جارٍ البحث...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="result-card" id="resultCard">
+            <h2>نتيجة البحث</h2>
+            <div id="resultContent"></div>
+        </div>
+
+        <div class="footer">جميع الحقوق محفوظة &copy; 2026</div>
+    </div>
+
+    <script>
+        const searchForm = document.getElementById('searchForm');
+        const queryInput = document.getElementById('query');
+        const searchBy = document.getElementById('searchBy');
+        const searchBtn = document.getElementById('searchBtn');
+        const loading = document.getElementById('loading');
+        const errorDiv = document.getElementById('error');
+        const resultCard = document.getElementById('resultCard');
+        const resultContent = document.getElementById('resultContent');
+
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            resultCard.classList.remove('visible');
+            errorDiv.classList.remove('visible');
+            loading.classList.add('visible');
+            searchBtn.disabled = true;
+
+            try {
+                const res = await fetch('/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, searchBy: searchBy.value })
+                });
+                const data = await res.json();
+
+                if (data.error) {
+                    errorDiv.textContent = data.error;
+                    errorDiv.classList.add('visible');
+                    return;
+                }
+
+                const statusClass = data.student_case_desc && data.student_case_desc.includes('ناجح') ? 'success' : 'fail';
+                resultContent.innerHTML = `
+                    <div class="result-row"><span class="result-label">رقم الجلوس</span><span class="result-value">${data.seating_no}</span></div>
+                    <div class="result-row"><span class="result-label">الاسم</span><span class="result-value">${data.arabic_name}</span></div>
+                    <div class="result-row"><span class="result-label">المجموع</span><span class="result-value">${data.total_degree}</span></div>
+                    <div class="result-row ${statusClass}"><span class="result-label">الحالة</span><span class="result-value">${data.student_case_desc}</span></div>
+                `;
+                resultCard.classList.add('visible');
+            } catch (err) {
+                errorDiv.textContent = 'حدث خطأ في الاتصال بالخادم';
+                errorDiv.classList.add('visible');
+            } finally {
+                loading.classList.remove('visible');
+                searchBtn.disabled = false;
+            }
+        });
+
+        document.getElementById('searchBy').addEventListener('change', function() {
+            const input = document.getElementById('query');
+            input.placeholder = this.value === 'seating_no' ? 'مثال: 2001970' : 'مثال: أحمد محمود';
+            input.value = '';
+            resultCard.classList.remove('visible');
+            errorDiv.classList.remove('visible');
+        });
+    </script>
+</body>
+</html>
