@@ -553,6 +553,233 @@
         .results-section.visible { display: block; }
         .no-results { display: none; }
         .no-results.visible { display: block; }
+
+        /* ---- tansiq section ---- */
+        .tansiq-section {
+            display: none;
+            margin-top: 40px;
+        }
+        .tansiq-section.visible { display: block; }
+        .tansiq-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .tansiq-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+        .tansiq-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tansiq-header p {
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+        .tansiq-header p strong { color: rgba(255,255,255,0.85); }
+
+        .branch-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .branch-btn {
+            padding: 14px 28px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.7);
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(.23,1,.32,1);
+        }
+        .branch-btn:hover {
+            background: rgba(99,102,241,0.15);
+            border-color: rgba(99,102,241,0.4);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .branch-btn.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(99,102,241,0.3);
+        }
+        .branch-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .tansiq-loading {
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            padding: 30px 0;
+            display: none;
+        }
+        .tansiq-loading.visible { display: block; }
+
+        .tansiq-stats {
+            display: none;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 18px 0 6px;
+        }
+        .tansiq-stats.visible { display: flex; }
+        .tansiq-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 10px 18px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+        .tansiq-stat strong { color: #fff; font-size: 15px; }
+
+        .college-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+        .college-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        .college-card.visible { opacity: 1; transform: translateY(0); }
+        .college-card:hover {
+            border-color: rgba(247,151,30,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .college-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .college-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .college-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .badge-min { background: rgba(247,151,30,0.12); color: #f7971e; border: 1px solid rgba(247,151,30,0.25); }
+        .badge-group { background: rgba(99,102,241,0.12); color: rgba(255,255,255,0.7); border: 1px solid rgba(99,102,241,0.25); }
+        .badge-type { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+        .badge-type.private { background: rgba(236,72,153,0.12); color: #f472b6; border: 1px solid rgba(236,72,153,0.25); }
+        .badge-qualified { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); font-size: 11px; padding: 3px 10px; border-radius: 8px; font-weight: 700; }
+        .badge-not-qualified { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); font-size: 11px; padding: 3px 10px; border-radius: 8px; font-weight: 700; }
+
+        .tansiq-note {
+            text-align: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 12px;
+            margin-top: 22px;
+            line-height: 1.8;
+        }
+
+        /* ---- subjects table ---- */
+        .subjects-section {
+            display: none;
+            margin-top: 40px;
+        }
+        .subjects-section.visible { display: block; }
+        .subjects-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 25px 30px;
+        }
+        .subjects-card h3 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+        }
+        .subjects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .subjects-table th {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            font-weight: 700;
+            padding: 10px 12px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .subjects-table td {
+            padding: 10px 12px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .subjects-table tr:last-child td { border-bottom: none; }
+        .subjects-table .not-applicable { color: rgba(255,255,255,0.25); }
+        .subjects-meta {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+        .subjects-meta strong { color: #fff; }
+        .subjects-loading, .subjects-error {
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            padding: 20px 0;
+        }
+        .subjects-error { color: #ef4444; }
+        .btn-subjects {
+            margin: 0 auto 8px;
+            display: block;
+            padding: 10px 26px;
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 12px;
+            background: rgba(99,102,241,0.1);
+            color: #a5b4fc;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-subjects:hover {
+            background: rgba(99,102,241,0.2);
+            color: #fff;
+        }
+        .btn-subjects:disabled { opacity: 0.5; cursor: not-allowed; }
+
     </style>
 </head>
 <body>
@@ -635,6 +862,39 @@
             <div class="empty-state visible">
                 <div class="icon">🔍</div>
                 <p>لا توجد نتائج للبحث المطلوب</p>
+            </div>
+        </div>
+
+        <div class="subjects-section" id="subjectsSection">
+            <div class="subjects-card">
+                <h3>درجات المواد</h3>
+                <div class="subjects-meta" id="subjectsMeta"></div>
+                <div class="subjects-loading" id="subjectsLoading">جارٍ جلب درجات المواد...</div>
+                <div class="subjects-error" id="subjectsError"></div>
+                <table class="subjects-table" id="subjectsTable" style="display:none">
+                    <thead>
+                        <tr><th>المادة</th><th>الدرجة</th><th>النسبة</th></tr>
+                    </thead>
+                    <tbody id="subjectsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tansiq-section" id="tansiqSection">
+            <div class="tansiq-card">
+                <div class="tansiq-header">
+                    <h2>توقع الكليات المؤهلة</h2>
+                    <p id="tansiqIntro">اختر شعبتك لعرض الكليات المتاحة لنسبتك <strong id="tansiqPct">0%</strong><br>بناءً على حدود تنسيق 2025 الرسمية كمؤشرات لعام 2026</p>
+                </div>
+                <div class="branch-buttons" id="branchButtons">
+                    <button class="branch-btn" data-branch="علمي علوم">علمي علوم</button>
+                    <button class="branch-btn" data-branch="علمي رياضة">علمي رياضة</button>
+                    <button class="branch-btn" data-branch="أدبي">أدبي</button>
+                </div>
+                <div class="tansiq-loading" id="tansiqLoading">جارٍ تحميل بيانات التنسيق...</div>
+                <div class="tansiq-stats" id="tansiqStats"></div>
+                <div class="college-list" id="collegeList"></div>
+                <p class="tansiq-note">* الحد الأدنى للقبول بالكلية هو ≤ نسبتك — التقديم الرسمي يخضع لقواعد تنسيق 2026 النهائية.</p>
             </div>
         </div>
 
@@ -729,6 +989,153 @@
         const prevPage = document.getElementById('prevPage');
         const nextPage = document.getElementById('nextPage');
         const pageNumbers = document.getElementById('pageNumbers');
+
+        // tansiq + subjects
+        let currentSeat = null;
+        let currentPct = null;
+        let tansiqData = null;
+        let activeBranch = null;
+        let branchLoading = false;
+
+        const subjectsSection = document.getElementById('subjectsSection');
+        const subjectsMeta = document.getElementById('subjectsMeta');
+        const subjectsLoading = document.getElementById('subjectsLoading');
+        const subjectsError = document.getElementById('subjectsError');
+        const subjectsTable = document.getElementById('subjectsTable');
+        const subjectsBody = document.getElementById('subjectsBody');
+        const tansiqSection = document.getElementById('tansiqSection');
+        const tansiqIntro = document.getElementById('tansiqIntro');
+        const tansiqPct = document.getElementById('tansiqPct');
+        const tansiqLoading = document.getElementById('tansiqLoading');
+        const tansiqStats = document.getElementById('tansiqStats');
+        const collegeList = document.getElementById('collegeList');
+        const branchButtons = document.getElementById('branchButtons');
+
+        function hideTansiqAndSubjects() {
+            subjectsSection.classList.remove('visible');
+            tansiqSection.classList.remove('visible');
+            activeBranch = null;
+            document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        function showSubjects() {
+            if (!currentSeat) return;
+            subjectsSection.classList.add('visible');
+            subjectsTable.style.display = 'none';
+            subjectsError.textContent = '';
+            subjectsError.style.display = 'none';
+            subjectsLoading.style.display = 'block';
+            subjectsMeta.innerHTML = '';
+
+            fetch('/subjects?seat=' + encodeURIComponent(currentSeat))
+                .then(r => r.json())
+                .then(data => {
+                    subjectsLoading.style.display = 'none';
+                    if (!data.ok) {
+                        subjectsError.textContent = data.error || 'تعذر جلب الدرجات';
+                        subjectsError.style.display = 'block';
+                        return;
+                    }
+                    subjectsMeta.innerHTML = `
+                        <span>الاسم: <strong>${data.name || ''}</strong></span>
+                        <span>الشعبة: <strong>${data.branch || '—'}</strong></span>
+                        <span>المجموع: <strong>${data.total || ''} / ${data.max_marks || ''}</strong></span>
+                    `;
+                    const rows = data.subjects || [];
+                    if (!rows.length) {
+                        subjectsError.textContent = 'لا توجد بيانات مواد متاحة';
+                        subjectsError.style.display = 'block';
+                        return;
+                    }
+                    subjectsBody.innerHTML = rows.map(s => {
+                        const na = /غير مقرر|—/i.test(s.mark + ' ' + s.pct);
+                        return `<tr>
+                            <td>${s.subject}</td>
+                            <td class="${na ? 'not-applicable' : ''}">${s.mark}</td>
+                            <td class="${na ? 'not-applicable' : ''}">${s.pct || ''}</td>
+                        </tr>`;
+                    }).join('');
+                    subjectsTable.style.display = 'table';
+                })
+                .catch(() => {
+                    subjectsLoading.style.display = 'none';
+                    subjectsError.textContent = 'حدث خطأ في جلب الدرجات';
+                    subjectsError.style.display = 'block';
+                });
+        }
+
+        function loadTansiq() {
+            if (tansiqData) return Promise.resolve(tansiqData);
+            return fetch('/tansiq')
+                .then(r => r.json())
+                .then(d => { tansiqData = d; return d; });
+        }
+
+        function showTansiq() {
+            tansiqSection.classList.add('visible');
+            tansiqPct.textContent = currentPct + '%';
+            tansiqStats.classList.remove('visible');
+            collegeList.innerHTML = '';
+            activeBranch = null;
+            document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        function renderColleges(branch) {
+            if (!tansiqData || !tansiqData.branches[branch]) return;
+            const all = tansiqData.branches[branch];
+            const qualified = all.filter(e => e.pct <= currentPct);
+            const notQualified = all.filter(e => e.pct > currentPct);
+            const qualifiedCount = qualified.length;
+
+            tansiqStats.innerHTML = `
+                <div class="tansiq-stat">الكليات المتاحة: <strong>${qualifiedCount}</strong></div>
+                <div class="tansiq-stat">إجمالي الكليات: <strong>${all.length}</strong></div>
+                <div class="tansiq-stat">أعلى كلية: <strong>${qualified.length ? qualified[0].pct : '—'}%</strong></div>
+            `;
+            tansiqStats.classList.add('visible');
+
+            const items = qualified.concat(notQualified);
+            collegeList.innerHTML = items.map(e => {
+                const q = e.pct <= currentPct;
+                return `
+                    <div class="college-card">
+                        <div class="college-name">${e.college}</div>
+                        <div class="college-meta">
+                            <span class="college-badge badge-min">الحد الأدنى: ${e.pct}%</span>
+                            <span class="college-badge badge-group">${e.group}</span>
+                            <span class="college-badge badge-type ${e.type !== 'حكومي' ? 'private' : ''}">${e.type}</span>
+                            <span class="${q ? 'badge-qualified' : 'badge-not-qualified'}">${q ? '✓ مؤهلة' : 'أعلى من نسبتك'}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.college-card').forEach((c, i) => {
+                    setTimeout(() => c.classList.add('visible'), i * 15);
+                });
+            });
+        }
+
+        branchButtons.addEventListener('click', (e) => {
+            const btn = e.target.closest('.branch-btn');
+            if (!btn || btn.disabled || branchLoading) return;
+            activeBranch = btn.dataset.branch;
+            document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            branchLoading = true;
+            tansiqLoading.classList.add('visible');
+            collegeList.innerHTML = '';
+            tansiqStats.classList.remove('visible');
+            loadTansiq()
+                .then(() => renderColleges(activeBranch))
+                .catch(() => {
+                    collegeList.innerHTML = '<p style="text-align:center;color:#ef4444">تعذر تحميل بيانات التنسيق</p>';
+                })
+                .finally(() => {
+                    tansiqLoading.classList.remove('visible');
+                    branchLoading = false;
+                });
+        });
 
         function getProgressColor(pct) {
             if (pct >= 85) return '#22c55e';
@@ -861,6 +1268,7 @@
             errorDiv.classList.remove('visible');
             loading3d.classList.add('visible');
             searchBtn.disabled = true;
+            hideTansiqAndSubjects();
 
             try {
                 const res = await fetch('/search', {
@@ -897,6 +1305,17 @@
                 statsBar.classList.add('visible');
                 renderCards();
                 renderPagination();
+
+                const singleBySeat = searchBy.value === 'seating_no' && allResults.length === 1;
+                if (singleBySeat) {
+                    currentSeat = allResults[0].seating_no;
+                    currentPct = allResults[0].percentage || 0;
+                    showSubjects();
+                    showTansiq();
+                } else {
+                    currentSeat = null;
+                    currentPct = null;
+                }
 
             } catch (err) {
                 errorDiv.textContent = 'حدث خطأ في الاتصال بالخادم';
